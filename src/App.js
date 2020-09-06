@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from "react";
+import  * as axios from 'axios'
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            groups: []
+        };
+    }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    async componentDidMount() {
+        axios.get("https://localhost:44395/api/group/")
+            .then(res => {
+                const groups = res.data;
+                this.setState({groups:groups})
+        })
+        console.log(this.state.group)
+    }
+
+    render() {
+        const { groups } = this.state;
+        return (
+            <ul>
+                {groups.map(group => (
+                    <li key={group.name}>
+                        {group.name} {group.age}
+                    </li>
+                ))}
+            </ul>
+
+        )
+    }
+
 }
 
-export default App;
+export default App
