@@ -1,6 +1,12 @@
-.image {
+
+classes.image {
     backgroundImage: 'url(https://source.unsplash.com/random)';
     backgroundRepeat: 'no-repeat';
+    background-color: azure;
     backgroundSize: 'cover';
     backgroundPosition: 'center';
+}
+claesses.paper {
+    flexDirection: 'column';
+    alignItems: 'center';
 }

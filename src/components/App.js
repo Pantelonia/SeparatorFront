@@ -1,108 +1,68 @@
 import React, {Component} from "react";
-import  * as axios from 'axios';
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            groups: [],
-            name: "",
-            id: 0
-        };
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import  API from './API'
 
-        this.onChange = this.onChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handlerDelete = this.handlerDelete.bind(this);
-        this.changeId = this.changeId.bind(this);
-    }
 
-    async componentDidMount() {
-        axios.get("https://localhost:44395/api/group/")
-            .then(res => {
-                const groups = res.data;
-                this.setState({groups:groups})
-            })
-        console.log(this.state.group)
-    }
+const useStyles = makeStyles((theme) => ({
+    root: {
+        height: '100vh',
+    },
+    image: {
+        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor:
+            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    },
+    paper: {
+        margin: theme.spacing(8, 4),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
 
-    onChange(e) {
-        var val = e.target.value;
-        this.setState({name: val});
-    }
+export default function App() {
+    const classes = useStyles();
 
-    handleSubmit(e) {
-        e.preventDefault();
-        const article = { title: 'React POST Request Example' };
-        axios.post('https://localhost:44395/api/group/', {"name" : this.state.name, "totalCost": 999})
-            .then(response => this.setState({ Id: response.data.id }))
-            .catch(error => {
-                this.setState({ errorMessage: error.message });
-                console.error('There was an error!', error);
-            });
-    }
-
-    handlerDelete(e) {
-        e.preventDefault();
-        deleteData(this.state.id, 'https://localhost:44395/api/group')
-
-    }
-
-    changeId(e){
-        var val = e.target.value;
-        this.setState({id: val});
-    }
-
-    render() {
-        const { groups } = this.state;
-        return (
-            <div>
-                <ul>
-                    {groups.map(group => (
-                        <li key={group.name}>
-                            {group.id} {group.name} {group.totalCost}
-                        </li>
-                    ))}
-                </ul>
-                <div>
-                    <form onSubmit={this.handleSubmit}>
-                        <p>
-                            <label>Имя:</label><br />
-                            <input type="text" value={this.state.name} onChange={this.onChange}/>
-                        </p>
-                        <input type="submit" value="Отправить" />
-                    </form>
+    return (
+        <Grid container component="main" className={classes.root}>
+            <CssBaseline />
+            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <ShoppingBasketIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Separator
+                    </Typography>
+                    <API/>
                 </div>
-                <div>
-
-                    <form onSubmit={this.handlerDelete}>
-                       <label>
-                            Person ID:
-                            <input type="text" name="id" onChange={this.changeId} />
-                       </label>
-                      <button type="submit">Delete</button>
-                    </form>
-                </div>
-
-            </div>
-
-
-        )
-    }
-
+            </Grid>
+        </Grid>
+    );
 }
-
-function deleteDatas(item, url) {
-    return fetch(url + '/' + item, {
-        method: 'delete'
-    })
-        .then(response => response.json());
-}
-function deleteData(item, url) {
-    return axios.delete(url + '/' + item)
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-            alert("You delete thaat gays id:" +  item);
-        })
-}
-
-export default App
