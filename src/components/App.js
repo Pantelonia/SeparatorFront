@@ -3,9 +3,13 @@ import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import  API from './API'
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import Typography from '@material-ui/core/Typography';
+import {makeStyles} from '@material-ui/core/styles';
+import API from './API'
+import {BrowserRouter, Route} from "react-router-dom";
+import Main from "./Main";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        position	: 'relative',
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -43,20 +48,26 @@ export default function App() {
     const classes = useStyles();
 
     return (
-        <Grid container component="main" className={classes.root}>
-            <CssBaseline />
-            <Grid item xs={false} sm={4} md={7} className={classes.image} />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <ShoppingBasketIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Separator
-                    </Typography>
-                    <API/>
-                </div>
+        <BrowserRouter>
+            <Grid container component="main" className={classes.root}>
+                <CssBaseline/>
+                <Grid item xs={false} sm={4} md={7} className={classes.image}/>
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <ShoppingBasketIcon/>
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Separator
+                        </Typography>
+                        <div>
+                            <Route exact path = "/" component={API}/>
+                            <Route path="/main" render={(props) => <Main {...props}/>}/>
+                        </div>
+                    </div>
+                </Grid>
             </Grid>
-        </Grid>
+        </BrowserRouter>
+
     );
 }

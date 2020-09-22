@@ -1,5 +1,8 @@
 import React, {Component} from "react";
 import * as axios from "axios";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 class DeleteGroup extends Component {
     constructor(props) {
@@ -17,33 +20,50 @@ class DeleteGroup extends Component {
 
     }
 
-    changeId(e){
+    changeId(e) {
         var val = e.target.value;
         this.setState({id: val});
     }
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.handlerDelete}>
-                    <label>
-                        Person ID:
-                        <input type="text" name="id" onChange={this.changeId} />
-                    </label>
-                    <button type="submit">Delete</button>
+            <Box color="text.primary" style={{padding: '10px'}}>
+                <form style={{padding: "30px"}} onSubmit={this.handlerDelete}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="id"
+                        label="Deleted Group"
+                        name="id"
+                        autoComplete="remove group by id"
+                        autoFocus
+                        onChange={this.changeId}
+                        />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handlerDelete}
+                    >
+                        Delete group
+                    </Button>
                 </form>
-            </div>
+            </Box>
         )
     }
 
 }
-export default  DeleteGroup
+
+export default DeleteGroup
 
 function deleteData(item, url) {
     return axios.delete(url + '/' + item)
         .then(res => {
             console.log(res);
             console.log(res.data);
-            alert("You delete thaat gays id:" +  item);
+            alert("You delete thaat gays id:" + item);
         })
 }
