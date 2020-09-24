@@ -1,10 +1,12 @@
 import React, {Component} from "react";
 import * as axios from 'axios';
-import DeleteGroup from "./DeleteGroup";
-import CreateGroup from "./CreateGroup";
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import ShowFriends from "./ShowFriends";
+import AddFriend from "./AddFriend";
+import DeleteFriend from "./DeleteFriend";
+import AddDish from "./AddDish";
 import Paper from "@material-ui/core/Paper";
 
 
@@ -14,7 +16,14 @@ class Main extends Component {
         this.state = {
             name: "Unnamed",
             groups: [],
-            id: 0
+            id: 0,
+            totalCost: 0,
+            friends: [],
+            isShow: false,
+            isAdd: false,
+            isDelete: false,
+            isTotal: false,
+            isAddDish: false
         }
 
     }
@@ -22,43 +31,66 @@ class Main extends Component {
     componentDidMount(props) {
         console.log("name of group", this.props.location.state.name);
         this.setState({name: this.props.location.state.name});
-        // axios.get("https://localhost:44395/api/group/name/" + this.props.location.state.name)
-        //     .then(res => {
-        //         const group = res.data;
-        //         console.log(group)
-        //         this.setState({groups: [group]})
-        //         this.setState({id: group.id})
-        //         console.log(this.state.groups)
-        //     });
-        // console.log(this.state.groups)
+        axios.get("https://localhost:44395/api/group/name/" + this.props.location.state.name)
+            .then(res => {
+                const group = res.data;
+                console.log(group)
+                this.setState({id: group.id})
+                this.setState({totalCost: group.totalCost})
+                this.setState({friends: group.friends})
+                console.log(this.state.groups)
+            });
+        console.log(this.state.groups)
 
     }
 
+
     render() {
+        const showFriend = this.state.isShow && <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{
+            position: "absolute",
+            top: '200px',
+            left: '100px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            borderRadius: "15px 100px 15px 100px",
+            padding: "40px"
+
+        }}>
+            <ShowFriends name={this.props.location.state.name}/>
+        </Grid>
+        const addFriend = this.state.isAdd && <AddFriend id={this.state.id}/>
+        const deleteFriend = this.state.isDelete && <DeleteFriend name={this.props.location.state.name}/>
+        const total = this.state.isTotal &&
+            <Typography component="h2" variant="h5">Total cost {this.state.totalCost}</Typography>
+        const addDish = this.state.isAddDish && <AddDish name={this.props.location.state.name}/>
+
         return (
             <div>
-                <Typography component="h2" variant="h7">
+                <Typography component="h2" variant="h5">
                     Welcome to {this.state.name} Group
+                    {total}
+
                 </Typography>
                 <Grid container spacing={3}>
-                    <Grid item item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={5}>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
-                            onClick={this.handleSubmit}
+                            onClick={this.handleShow}
                         >
                             Show all friends
                         </Button>
                     </Grid>
-                    <Grid item item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={5}>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
-                            onClick={this.handleSubmit}
+                            onClick={this.handleNewFriend}
                         >
                             Add new friends
                         </Button>
@@ -69,7 +101,7 @@ class Main extends Component {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            onClick={this.handleSubmit}
+                            onClick={this.handleDelete}
                         >
                             delete friend
                         </Button>
@@ -80,23 +112,23 @@ class Main extends Component {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            onClick={this.handleSubmit}
+                            onClick={this.handleTotal}
                         >
-                            Add new friends
+                            Show total cost
                         </Button>
                     </Grid>
-                    <Grid item item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={5}>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="secondary"
-                            onClick={this.handleSubmit}
+                            onClick={this.handleAddDish}
                         >
                             Add new dish
                         </Button>
                     </Grid>
-                    <Grid item item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={5}>
                         <Button
                             type="submit"
                             fullWidth
@@ -119,13 +151,43 @@ class Main extends Component {
                         </Button>
                     </Grid>
                 </Grid>
-
-
-
+                {showFriend}
+                {addFriend}
+                {deleteFriend}
+                {addDish}
 
             </div>
         );
     }
+
+    handleShow = () => {
+        this.setState({
+            isShow: !this.state.isShow
+        })
+
+    }
+
+    handleNewFriend = () => {
+        this.setState({
+            isAdd: !this.state.isAdd
+        })
+    }
+    handleDelete = () => {
+        this.setState({
+            isDelete: !this.state.isDelete
+        })
+    }
+    handleTotal = () => {
+        this.setState({
+            isTotal: !this.state.isTotal
+        })
+    }
+    handleAddDish = () => {
+        this.setState({
+            isAddDish: !this.state.isAddDish
+        })
+    }
+
 }
 
 export default Main

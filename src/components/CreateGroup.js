@@ -23,7 +23,7 @@ class CreateGroup extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        axios.post('https://localhost:44395/api/group/', {"name": this.state.name, "totalCost": 999})
+        axios.post('https://localhost:44395/api/group/', {"name": this.state.name})
             .then(response => this.setState({Id: response.data.id}))
             .catch(error => {
                 this.setState({errorMessage: error.message});
