@@ -1,36 +1,30 @@
 import React, {Component} from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import * as axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import * as axios from "axios";
-import ShowFriends from "./ShowFriends";
 
-class DeleteFriend extends Component {
+class DeleteDish extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: 0
+            friends: [],
+            name: ""
         }
-        this.onChangeId = this.onChangeId.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
-    }
-    onChangeId(e) {
-        var val = e.target.value;
-        this.setState({id: val});
-    }
-    handleSubmit(e) {
-        e.preventDefault();
-        axios.delete("https://localhost:44395/api/friend/" + this.state.id)
+    componentDidMount(props) {
+        axios.get("https://localhost:44395/api/group/name/" + this.props.name)
             .then(res => {
                 const group = res.data;
-                console.log(group)
+                this.setState({friends: group.friends})
             });
+        const {friends} = this.state;
     }
 
-
     render() {
+        const friends = this.state.friends
         return (
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{
                 position: "absolute",
@@ -43,7 +37,21 @@ class DeleteFriend extends Component {
                 padding: "40px"
 
             }}>
-                <ShowFriends name = {this.props.name}/>
+                <h2>List of friend's dish</h2>
+                <ul>
+                    {friends.map(friend => (
+                        <li key={friend.id}>
+                            Id {friend.id}: Name {friend.name}
+                            <ul>
+                                {friend.dishes.map(dish =>(
+                                    <li key ={dish.id}>
+                                        Dish id: {dish.id} Dish name: {dish.name} Dish cost: {dish.cost}
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+                    ))}
+                </ul>
                 <form onSubmit={this.handleSubmit}>
                     <TextField
                         variant="outlined"
@@ -51,11 +59,11 @@ class DeleteFriend extends Component {
                         required
                         fullWidth
                         id="groupName"
-                        label="Group Name"
+                        label="Dish name"
                         name="email"
                         autoComplete="NewGroup"
                         autoFocus
-                        onChange={this.onChangeId}
+                        onChange={this.onChangeName}
                     />
                     <Button
                         type="submit"
@@ -64,15 +72,13 @@ class DeleteFriend extends Component {
                         color="primary"
                         onClick={this.handleSubmit}
                     >
-                        Delete friend
+                        add dish
                     </Button>
                 </form>
             </Grid>
-
         )
     }
 
-
 }
 
-export default DeleteFriend;
+export default DeleteDish;

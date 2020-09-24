@@ -8,6 +8,7 @@ import AddFriend from "./AddFriend";
 import DeleteFriend from "./DeleteFriend";
 import AddDish from "./AddDish";
 import Paper from "@material-ui/core/Paper";
+import DeleteDish from "./DeleteDish";
 
 
 class Main extends Component {
@@ -23,7 +24,8 @@ class Main extends Component {
             isAdd: false,
             isDelete: false,
             isTotal: false,
-            isAddDish: false
+            isAddDish: false,
+            isDeleteDish: false
         }
 
     }
@@ -64,6 +66,7 @@ class Main extends Component {
         const total = this.state.isTotal &&
             <Typography component="h2" variant="h5">Total cost {this.state.totalCost}</Typography>
         const addDish = this.state.isAddDish && <AddDish name={this.props.location.state.name}/>
+        const deleteDish  = this.state.isDeleteDish && <DeleteDish name={this.props.location.state.name}/>
 
         return (
             <div>
@@ -134,7 +137,7 @@ class Main extends Component {
                             fullWidth
                             variant="contained"
                             color="secondary"
-                            onClick={this.handleSubmit}
+                            onClick={this.handleDeleteDish}
                         >
                             delete dish
                         </Button>
@@ -155,6 +158,7 @@ class Main extends Component {
                 {addFriend}
                 {deleteFriend}
                 {addDish}
+                {deleteDish}
 
             </div>
         );
@@ -187,6 +191,12 @@ class Main extends Component {
             isAddDish: !this.state.isAddDish
         })
     }
+    handleDeleteDish = () => {
+        this.setState({
+            isDeleteDish: !this.state.isDeleteDish
+        })
+    }
+
 
 }
 

@@ -1,6 +1,4 @@
 import React, {Component} from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import * as axios from "axios";
 
 class ShowFriends extends Component {
@@ -17,7 +15,6 @@ class ShowFriends extends Component {
                 const group = res.data;
                 this.setState({friends: group.friends})
             });
-        const {friends} = this.state;
     }
 
     render() {

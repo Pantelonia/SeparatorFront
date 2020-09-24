@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import * as axios from "axios";
 import ShowFriends from "./ShowFriends";
 
-class DeleteFriend extends Component {
+class AddDish extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,7 +47,6 @@ class DeleteFriend extends Component {
 
 
     render() {
-        const friends = this.props.friends
         return (
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{
                 position: "absolute",
@@ -116,4 +115,4 @@ class DeleteFriend extends Component {
 
 }
 
-export default DeleteFriend;
+export default AddDish
