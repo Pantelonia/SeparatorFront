@@ -1,35 +1,35 @@
 import React, {Component} from "react";
 import * as axios from "axios";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import {Redirect} from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 
-class CreateGroup extends Component {
+class FoundGroup extends Component {
     constructor(props) {
         super(props);
         this.state = {
             name: "",
-            group: [],
-            friend: "Organizer",
+            groups: [],
             rederect: false
         };
 
         this.onChangeName = this.onChangeName.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.onChangeFriend = this.onChangeFriend.bind(this);
 
     }
 
+    async componentDidMount() {
+        axios.get("https://localhost:44395/api/group/")
+            .then(res => {
+                const groups = res.data;
+                this.setState({groups: groups})
+            })
+        console.log(this.state.group)
+    }
 
     handleSubmit(e) {
-        e.preventDefault();
-        axios.post('https://localhost:44395/api/group/', {"name": this.state.name})
-            .then(response => this.setState({Id: response.data.id}))
-            .catch(error => {
-                this.setState({errorMessage: error.message});
-                console.error('There was an error!', error);
-            });
         this.setState({
             redirect: true
         })
@@ -39,12 +39,6 @@ class CreateGroup extends Component {
         var val = e.target.value;
         this.setState({name: val});
     }
-
-    onChangeFriend(e) {
-        var val = e.target.value;
-        this.setState({friend: val});
-    }
-
     renderRedirect = () => {
         if (this.state.redirect) {
             return <Redirect to={{pathname:'/main', state: {name: this.state.name}}}/>
@@ -52,12 +46,28 @@ class CreateGroup extends Component {
     }
 
 
+
     render() {
+        const {groups} = this.state;
         return (
-            <Box color="text.primary"
-                 style={{position	: "absolute",
-                     top		: '200px',
-                     left		: '100px'}}>
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{
+                position: "absolute",
+                top: '200px',
+                left: '100px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: "15px 100px 15px 100px",
+                padding: "40px"
+
+            }}>
+                <ul>
+                    {groups.map(group => (
+                        <li key={group.name}>
+                            {group.id} {group.name} {group.totalCost}
+                        </li>
+                    ))}
+                </ul>
                 <form onSubmit={this.handleSubmit}>
                     <TextField
                         variant="outlined"
@@ -67,7 +77,7 @@ class CreateGroup extends Component {
                         id="groupName"
                         label="Group Name"
                         name="email"
-                        autoComplete="NewGroup"
+                        autoComplete="GroupName"
                         autoFocus
                         onChange={this.onChangeName}
                     />
@@ -78,16 +88,15 @@ class CreateGroup extends Component {
                         color="primary"
                         onClick={this.handleSubmit}
                     >
-                        Create group
+                        Choose group
                     </Button>
                 </form>
                 {this.renderRedirect()}
-            </Box>
-
-
+            </Grid>
         )
+
     }
 
 }
 
-export default CreateGroup;
+export default FoundGroup;

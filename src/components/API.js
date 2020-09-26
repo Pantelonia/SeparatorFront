@@ -4,55 +4,49 @@ import DeleteGroup from "./DeleteGroup";
 import CreateGroup from "./CreateGroup";
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
-
-
+import FoundGroup from "./FoundGroup";
 
 
 class API extends Component {
     state = {
-        groups: [],
         isCreate: false,
-        isDelete: false
-
-
+        isDelete: false,
+        isFound:false
     }
 
 
-    async componentDidMount() {
-        axios.get("https://localhost:44395/api/group/")
-            .then(res => {
-                const groups = res.data;
-                this.setState({groups: groups})
-            })
-        console.log(this.state.group)
-    }
+
 
     render() {
-        const {groups} = this.state;
         const create = this.state.isCreate && <CreateGroup/>;
         const deletes = this.state.isDelete && <DeleteGroup/>;
+        const  found = this.state.isFound && <FoundGroup/>;
         return (
-            <div>
-                <ul>
-                    {groups.map(group => (
-                        <li key={group.name}>
-                            {group.id} {group.name} {group.totalCost}
-                        </li>
-                    ))}
-                </ul>
-                <Grid container component="menu" spacing={1}>
-                    <Grid container wrap="nowrap" spacing={2}  >
+            <div >
+
+                <Grid  container component="menu" spacing={1}>
+                    <Grid item xs={8} sm={8} md={10} wrap="nowrap" >
                         <Button
                             fullWidth
                             onClick={this.handleCreate}
                             variant="contained"
                             color="secondary"
-                            style={{margin: '40px' }}
-                            >
+                            style={{margin: '40px'}}
+                        >
                             Create new group
                         </Button>
                     </Grid>
-                    <Grid container wrap="nowrap" spacing={2}>
+                    <Grid item xs={8} sm={8} md={10} wrap="nowrap" >
+                        <Button
+                            fullWidth
+                            onClick={this.handleFound}
+                            variant="contained"
+                            color="secondary"
+                        >
+                            Found group
+                        </Button>
+                    </Grid>
+                    <Grid item xs={8} sm={8} md={10} wrap="nowrap">
                         <Button
                             fullWidth
                             onClick={this.handleDelete}
@@ -64,6 +58,7 @@ class API extends Component {
                     </Grid>
                 </Grid>
                 {create}
+                {found}
                 {deletes}
             </div>
         );
@@ -78,6 +73,11 @@ class API extends Component {
     handleDelete = () => {
         this.setState({
             isDelete: !this.state.isDelete
+        })
+    }
+    handleFound = () => {
+        this.setState({
+            isFound: !this.state.isFound
         })
     }
 }

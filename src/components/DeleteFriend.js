@@ -51,9 +51,9 @@ class DeleteFriend extends Component {
                         required
                         fullWidth
                         id="groupName"
-                        label="Group Name"
+                        label="Friend Name"
                         name="email"
-                        autoComplete="NewGroup"
+                        autoComplete="DeleteFriend"
                         autoFocus
                         onChange={this.onChangeId}
                     />

@@ -9,7 +9,30 @@ import DeleteFriend from "./DeleteFriend";
 import AddDish from "./AddDish";
 import Paper from "@material-ui/core/Paper";
 import DeleteDish from "./DeleteDish";
+import Separate from "./Separate";
 
+class ShowTotal extends  Component{
+    constructor(props) {
+        super(props);
+        this.state ={
+            name:"Unnamed",
+            totalCost:0
+        }
+    }
+    componentDidMount(props) {
+        axios.get("https://localhost:44395/api/group/name/" + this.props.name)
+            .then(res => {
+                const group = res.data;
+                console.log(group)
+                this.setState({totalCost: group.totalCost})
+            });
+    }
+    render() {
+        return(
+            <Typography component="h2" variant="h5">Total cost {this.state.totalCost}</Typography>
+        )
+    }
+}
 
 class Main extends Component {
     constructor(props) {
@@ -25,7 +48,8 @@ class Main extends Component {
             isDelete: false,
             isTotal: false,
             isAddDish: false,
-            isDeleteDish: false
+            isDeleteDish: false,
+            isSeparate: false
         }
 
     }
@@ -63,10 +87,10 @@ class Main extends Component {
         </Grid>
         const addFriend = this.state.isAdd && <AddFriend id={this.state.id}/>
         const deleteFriend = this.state.isDelete && <DeleteFriend name={this.props.location.state.name}/>
-        const total = this.state.isTotal &&
-            <Typography component="h2" variant="h5">Total cost {this.state.totalCost}</Typography>
+        const total = this.state.isTotal && <ShowTotal  name={this.props.location.state.name}/>
         const addDish = this.state.isAddDish && <AddDish name={this.props.location.state.name}/>
         const deleteDish  = this.state.isDeleteDish && <DeleteDish name={this.props.location.state.name}/>
+        const separate =  this.state.isSeparate && <Separate name={this.props.location.state.name}/>
 
         return (
             <div>
@@ -148,7 +172,7 @@ class Main extends Component {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            onClick={this.handleSubmit}
+                            onClick={this.handleSeparate}
                         >
                             Separate
                         </Button>
@@ -159,6 +183,7 @@ class Main extends Component {
                 {deleteFriend}
                 {addDish}
                 {deleteDish}
+                {separate}
 
             </div>
         );
@@ -194,6 +219,11 @@ class Main extends Component {
     handleDeleteDish = () => {
         this.setState({
             isDeleteDish: !this.state.isDeleteDish
+        })
+    }
+    handleSeparate = () => {
+        this.setState({
+            isSeparate: !this.state.isSeparate
         })
     }
 
