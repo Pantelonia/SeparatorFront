@@ -2,8 +2,6 @@ import React, {Component} from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import * as axios from "axios";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 
 class Separate extends Component {
     constructor(props) {
@@ -22,7 +20,6 @@ class Separate extends Component {
                 this.setState({friends: group.friends});
                 this.setState({totalCost:group.totalCost})
             });
-        const {friends} = this.state;
     }
 
     render() {

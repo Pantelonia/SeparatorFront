@@ -11,14 +11,15 @@ import Paper from "@material-ui/core/Paper";
 import DeleteDish from "./DeleteDish";
 import Separate from "./Separate";
 
-class ShowTotal extends  Component{
+class ShowTotal extends Component {
     constructor(props) {
         super(props);
-        this.state ={
-            name:"Unnamed",
-            totalCost:0
+        this.state = {
+            name: "Unnamed",
+            totalCost: 0
         }
     }
+
     componentDidMount(props) {
         axios.get("https://localhost:44395/api/group/name/" + this.props.name)
             .then(res => {
@@ -27,8 +28,9 @@ class ShowTotal extends  Component{
                 this.setState({totalCost: group.totalCost})
             });
     }
+
     render() {
-        return(
+        return (
             <Typography component="h2" variant="h5">Total cost {this.state.totalCost}</Typography>
         )
     }
@@ -72,25 +74,26 @@ class Main extends Component {
 
 
     render() {
-        const showFriend = this.state.isShow && <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{
-            position: "absolute",
-            top: '200px',
-            left: '100px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            borderRadius: "15px 100px 15px 100px",
-            padding: "40px"
+        const showFriend = this.state.isShow &&
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{
+                position: "absolute",
+                top: '200px',
+                left: '100px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: "15px 100px 15px 100px",
+                padding: "40px"
 
-        }}>
-            <ShowFriends name={this.props.location.state.name}/>
-        </Grid>
+            }}>
+                <ShowFriends name={this.props.location.state.name}/>
+            </Grid>
         const addFriend = this.state.isAdd && <AddFriend id={this.state.id}/>
         const deleteFriend = this.state.isDelete && <DeleteFriend name={this.props.location.state.name}/>
-        const total = this.state.isTotal && <ShowTotal  name={this.props.location.state.name}/>
+        const total = this.state.isTotal && <ShowTotal name={this.props.location.state.name}/>
         const addDish = this.state.isAddDish && <AddDish name={this.props.location.state.name}/>
-        const deleteDish  = this.state.isDeleteDish && <DeleteDish name={this.props.location.state.name}/>
-        const separate =  this.state.isSeparate && <Separate name={this.props.location.state.name}/>
+        const deleteDish = this.state.isDeleteDish && <DeleteDish name={this.props.location.state.name}/>
+        const separate = this.state.isSeparate && <Separate name={this.props.location.state.name}/>
 
         return (
             <div>
@@ -190,6 +193,7 @@ class Main extends Component {
     }
 
     handleShow = () => {
+        this.closeAll();
         this.setState({
             isShow: !this.state.isShow
         })
@@ -197,33 +201,50 @@ class Main extends Component {
     }
 
     handleNewFriend = () => {
+        this.closeAll();
         this.setState({
             isAdd: !this.state.isAdd
         })
     }
     handleDelete = () => {
+        this.closeAll();
         this.setState({
             isDelete: !this.state.isDelete
         })
     }
     handleTotal = () => {
+        this.closeAll();
         this.setState({
             isTotal: !this.state.isTotal
         })
     }
     handleAddDish = () => {
+        this.closeAll();
         this.setState({
             isAddDish: !this.state.isAddDish
         })
     }
     handleDeleteDish = () => {
+        this.closeAll();
         this.setState({
             isDeleteDish: !this.state.isDeleteDish
         })
     }
     handleSeparate = () => {
+        this.closeAll();
         this.setState({
             isSeparate: !this.state.isSeparate
+        })
+    }
+    closeAll = () => {
+        this.setState({
+            isShow: false,
+            isAdd: false,
+            isDelete: false,
+            isTotal: false,
+            isAddDish: false,
+            isDeleteDish: false,
+            isSeparate: false
         })
     }
 

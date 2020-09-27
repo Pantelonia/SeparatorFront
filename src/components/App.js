@@ -19,8 +19,6 @@ const useStyles = makeStyles((theme) => ({
     image: {
         backgroundImage: 'url(https://source.unsplash.com/random)',
         backgroundRepeat: 'no-repeat',
-        backgroundColor:
-            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         position	: 'relative',
@@ -57,7 +55,7 @@ export default function App() {
                         <Avatar className={classes.avatar}>
                             <ShoppingBasketIcon/>
                         </Avatar>
-                        <Typography component="h1" variant="h5">
+                        <Typography id="WelcomeTitle" component="h1" variant="h5">
                             Separator
                         </Typography>
                         <div>

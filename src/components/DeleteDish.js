@@ -20,7 +20,6 @@ class DeleteDish extends Component {
                 const group = res.data;
                 this.setState({friends: group.friends})
             });
-        const {friends} = this.state;
     }
 
     render() {

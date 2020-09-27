@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import * as axios from 'axios';
 import DeleteGroup from "./DeleteGroup";
 import CreateGroup from "./CreateGroup";
 import Button from '@material-ui/core/Button';
@@ -31,7 +30,6 @@ class API extends Component {
                             onClick={this.handleCreate}
                             variant="contained"
                             color="secondary"
-                            style={{margin: '40px'}}
                         >
                             Create new group
                         </Button>

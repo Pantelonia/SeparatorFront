@@ -34,7 +34,6 @@ class AddFriend extends Component {
 
 
     render() {
-        const friends = this.props.friends
         return (
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{
                 position: "absolute",
