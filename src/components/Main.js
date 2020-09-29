@@ -10,6 +10,7 @@ import AddDish from "./AddDish";
 import Paper from "@material-ui/core/Paper";
 import DeleteDish from "./DeleteDish";
 import Separate from "./Separate";
+import {Redirect} from "react-router-dom";
 
 class ShowTotal extends Component {
     constructor(props) {
@@ -51,7 +52,8 @@ class Main extends Component {
             isTotal: false,
             isAddDish: false,
             isDeleteDish: false,
-            isSeparate: false
+            isSeparate: false,
+            isBack: false
         }
 
     }
@@ -94,16 +96,21 @@ class Main extends Component {
         const addDish = this.state.isAddDish && <AddDish name={this.props.location.state.name}/>
         const deleteDish = this.state.isDeleteDish && <DeleteDish name={this.props.location.state.name}/>
         const separate = this.state.isSeparate && <Separate name={this.props.location.state.name}/>
+        const back = this.state.isBack && <Redirect to={{pathname: '/'}}/>
 
         return (
-            <div>
-                <Typography component="h2" variant="h5">
+            <div id="main" style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }}>
+                <Typography id = "Hi" component="h2" variant="h5">
                     Welcome to {this.state.name} Group
                     {total}
 
                 </Typography>
                 <Grid container spacing={3}>
-                    <Grid item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={12}>
                         <Button
                             type="submit"
                             fullWidth
@@ -114,7 +121,7 @@ class Main extends Component {
                             Show all friends
                         </Button>
                     </Grid>
-                    <Grid item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={6}>
                         <Button
                             type="submit"
                             fullWidth
@@ -125,7 +132,7 @@ class Main extends Component {
                             Add new friends
                         </Button>
                     </Grid>
-                    <Grid item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={6}>
                         <Button
                             type="submit"
                             fullWidth
@@ -136,7 +143,7 @@ class Main extends Component {
                             delete friend
                         </Button>
                     </Grid>
-                    <Grid item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={12}>
                         <Button
                             type="submit"
                             fullWidth
@@ -147,7 +154,7 @@ class Main extends Component {
                             Show total cost
                         </Button>
                     </Grid>
-                    <Grid item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={6}>
                         <Button
                             type="submit"
                             fullWidth
@@ -158,7 +165,7 @@ class Main extends Component {
                             Add new dish
                         </Button>
                     </Grid>
-                    <Grid item xs={8} sm={8} md={5}>
+                    <Grid item xs={8} sm={8} md={6}>
                         <Button
                             type="submit"
                             fullWidth
@@ -169,7 +176,7 @@ class Main extends Component {
                             delete dish
                         </Button>
                     </Grid>
-                    <Grid item xs={8} sm={8} md={10}>
+                    <Grid item xs={8} sm={8} md={12}>
                         <Button
                             type="submit"
                             fullWidth
@@ -180,6 +187,18 @@ class Main extends Component {
                             Separate
                         </Button>
                     </Grid>
+                    <Grid item xs={8} sm={8} md={12}>
+                        <Button
+                            id ="backToMain"
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleBack}
+                        >
+                            back to welcome page
+                        </Button>
+                    </Grid>
                 </Grid>
                 {showFriend}
                 {addFriend}
@@ -187,6 +206,7 @@ class Main extends Component {
                 {addDish}
                 {deleteDish}
                 {separate}
+                {back}
 
             </div>
         );
@@ -245,6 +265,11 @@ class Main extends Component {
             isAddDish: false,
             isDeleteDish: false,
             isSeparate: false
+        })
+    }
+    handleBack = () => {
+        this.setState({
+            isBack: !this.state.isBack
         })
     }
 

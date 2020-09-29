@@ -6,10 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import API from './API'
 import {BrowserRouter, Route} from "react-router-dom";
 import Main from "./Main";
-
+import WelcomePage from "./WelcomePage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        position	: 'relative',
+        position: 'relative',
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -46,26 +45,25 @@ export default function App() {
     const classes = useStyles();
 
     return (
-        <BrowserRouter>
-            <Grid container component="main" className={classes.root}>
-                <CssBaseline/>
-                <Grid item xs={false} sm={4} md={7} className={classes.image}/>
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <div className={classes.paper}>
-                        <Avatar className={classes.avatar}>
-                            <ShoppingBasketIcon/>
-                        </Avatar>
-                        <Typography id="WelcomeTitle" component="h1" variant="h5">
-                            Separator
-                        </Typography>
-                        <div>
-                            <Route exact path = "/" component={API}/>
-                            <Route path="/main" render={(props) => <Main {...props}/>}/>
-                        </div>
-                    </div>
-                </Grid>
+        <Grid container component="main" className={classes.root}>
+            <CssBaseline/>
+            <Grid item xs={false} sm={4} md={7} className={classes.image}/>
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <ShoppingBasketIcon/>
+                    </Avatar>
+                    <Typography id="WelcomeTitle" component="h1" variant="h5">
+                        Separator
+                    </Typography>
+                    <br/>
+                    <BrowserRouter>
+                        <Route exact path="/" component={WelcomePage}/>
+                        <Route path="/main" render={(props) => <Main {...props}/>}/>
+                    </BrowserRouter>
+                </div>
             </Grid>
-        </BrowserRouter>
+        </Grid>
 
     );
 }

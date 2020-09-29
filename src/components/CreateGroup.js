@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import * as axios from "axios";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import {Redirect} from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 
 class CreateGroup extends Component {
     constructor(props) {
@@ -54,17 +55,24 @@ class CreateGroup extends Component {
 
     render() {
         return (
-            <Box color="text.primary"
-                 style={{position	: "absolute",
-                     top		: '200px',
-                     left		: '100px'}}>
-                <form onSubmit={this.handleSubmit}>
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{
+                position: "absolute",
+                top: '200px',
+                left: '100px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: "15px 100px 15px 100px",
+                padding: "40px"
+
+            }}>
+                <form id="createGroupForm" onSubmit={this.handleSubmit}>
                     <TextField
+                        id = "newGroupName"
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="groupName"
                         label="Group Name"
                         name="email"
                         autoComplete="NewGroup"
@@ -72,6 +80,7 @@ class CreateGroup extends Component {
                         onChange={this.onChangeName}
                     />
                     <Button
+                        id = "newGroupSub"
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -82,7 +91,7 @@ class CreateGroup extends Component {
                     </Button>
                 </form>
                 {this.renderRedirect()}
-            </Box>
+            </Grid>
 
 
         )

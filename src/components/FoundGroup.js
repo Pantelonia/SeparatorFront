@@ -63,18 +63,18 @@ class FoundGroup extends Component {
             }}>
                 <ul>
                     {groups.map(group => (
-                        <li key={group.name}>
+                        <li id = {group.name} key={group.name}>
                             {group.id} {group.name} {group.totalCost}
                         </li>
                     ))}
                 </ul>
-                <form onSubmit={this.handleSubmit}>
+                <form id = "foundGroupForm" onSubmit={this.handleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="groupName"
+                        id="groupNameSelected"
                         label="Group Name"
                         name="email"
                         autoComplete="GroupName"
@@ -82,6 +82,7 @@ class FoundGroup extends Component {
                         onChange={this.onChangeName}
                     />
                     <Button
+                        id = "foundsub"
                         type="submit"
                         fullWidth
                         variant="contained"
