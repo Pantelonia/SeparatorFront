@@ -16,16 +16,16 @@ class WelcomePage extends Component {
 
     render() {
         const create = this.state.isCreate && <CreateGroup/>;
-        const deletes = this.state.isDelete && <DeleteGroup/>;
+        const deletes = this.state.isDelete && <DeleteGroup onButtonClick={this.handleClose}/>;
         const found = this.state.isFound && <FoundGroup/>;
         return (
 
-            <Grid id = "welcomePage" container component="menu" spacing={4}>
+            <Grid id="welcomePage" container component="menu" spacing={4}>
 
                 <Grid item xs={10} sm={10} md={12}>
                     <Button
                         className="myButton"
-                        id = "createGroupButton"
+                        id="createGroupButton"
                         fullWidth
                         onClick={this.handleCreate}
                         variant="contained"
@@ -37,7 +37,7 @@ class WelcomePage extends Component {
                 <Grid item xs={10} sm={10} md={12}>
                     <Button
                         className="myButton"
-                        id = "foundGroupButton"
+                        id="foundGroupButton"
                         fullWidth
                         onClick={this.handleFound}
                         variant="contained"
@@ -50,12 +50,12 @@ class WelcomePage extends Component {
                     <Button
                         fullWidth
                         className="myButton"
-                        id = "deleteGroupButton"
+                        id="deleteGroupButton"
                         onClick={this.handleDelete}
                         variant="contained"
                         color="secondary"
                     >
-                        Delete Group by id
+                        Delete Group by name
                     </Button>
                 </Grid>
                 {create}
@@ -66,6 +66,13 @@ class WelcomePage extends Component {
         );
     }
 
+    handleClose = () => {
+        this.setState({
+            isDelete: false,
+            isFound: false,
+            isCreate: false
+        })
+    }
     handleCreate = () => {
         console.log('---', 'clicked')
         this.setState({
@@ -83,8 +90,8 @@ class WelcomePage extends Component {
     }
     handleFound = () => {
         this.setState({
-            isDelete:false,
-            isCreate:false,
+            isDelete: false,
+            isCreate: false,
             isFound: !this.state.isFound
         })
     }
