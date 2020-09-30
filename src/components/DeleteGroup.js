@@ -10,11 +10,13 @@ class DeleteGroup extends Component {
         super(props);
         this.state = {
             groups: [],
-            name: 0
+            name: "Unnamed",
+            nameIsValid: false,
         };
         this.handlerDelete = this.handlerDelete.bind(this);
         this.changeName = this.changeName.bind(this);
     }
+
     async componentDidMount() {
         axios.get("https://localhost:44395/api/group/")
             .then(res => {
@@ -26,16 +28,36 @@ class DeleteGroup extends Component {
 
     handlerDelete(e) {
         e.preventDefault();
-        var group = this.state.groups.find(obj => {
-            return obj.name === this.state.name
-        })
-        deleteData(group.id, 'https://localhost:44395/api/group')
+        console.log(this.state.nameIsValid);
+        if (this.state.nameIsValid === true) {
+            var group = this.state.groups.find(obj => {
+                return obj.name === this.state.name
+            })
+            deleteData(group.id, 'https://localhost:44395/api/group');
+            this.closeAll()
+        } else {
+            alert("Incorrect name:" + this.state.name)
+        }
 
+
+    }
+
+    validateName(name) {
+        const {groups} = this.state;
+        var found = false;
+        for (var i = 0; i < groups.length; i++) {
+            if (groups[i].name === name) {
+                found = true;
+                break;
+            }
+        }
+        return found
     }
 
     changeName(e) {
         var val = e.target.value;
-        this.setState({name: val});
+        var valid = this.validateName(val);
+        this.setState({name: val, nameIsValid: valid});
     }
 
     render() {
@@ -54,14 +76,14 @@ class DeleteGroup extends Component {
             }}>
                 <ul>
                     {groups.map(group => (
-                        <li id = {group.name} key={group.name}>
+                        <li id={group.name} key={group.name}>
                             {group.id} {group.name} {group.totalCost}
                         </li>
                     ))}
                 </ul>
-                <form id = "deleteGroupForm" onSubmit={this.handlerDelete}>
+                <form id="deleteGroupForm" onSubmit={this.handlerDelete}>
                     <TextField
-                        id = "nameDelete"
+                        id="nameDelete"
                         variant="outlined"
                         margin="normal"
                         required
@@ -73,12 +95,12 @@ class DeleteGroup extends Component {
                         onChange={this.changeName}
                     />
                     <Button
-                        id ="deleteBtn"
+                        id="deleteBtn"
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
-                        onClick={this.handlerDelete}
+                        onClick={this.handlerDelete }
                     >
                         Delete group
                     </Button>
@@ -86,12 +108,17 @@ class DeleteGroup extends Component {
             </Grid>
         )
     }
+    closeAll =() =>{
+        const {onButtonClick} = this.props;
+        onButtonClick();
+
+    }
 
 }
 
 export default DeleteGroup
 
-function deleteData(item, url) {
+export function  deleteData(item, url) {
     return axios.delete(url + '/' + item)
         .then(res => {
             console.log(res);
