@@ -10,8 +10,13 @@ class DeleteDish extends Component {
         super(props);
         this.state = {
             friends: [],
-            name: ""
+            dishes: [],
+            id: 0,
+            validateId: false,
         }
+        this.handlerSubmit = this.handlerSubmit.bind(this);
+        this.onChangeId = this.onChangeId.bind(this);
+
     }
 
     componentDidMount(props) {
@@ -20,6 +25,39 @@ class DeleteDish extends Component {
                 const group = res.data;
                 this.setState({friends: group.friends})
             });
+    }
+
+    validId = (id) => {
+        const {friends} = this.state;
+        var found = false;
+        for (var i = 0; i < friends.length; i++) {
+            var dishes = friends[i].dishes
+            for (var j = 0; j < dishes.length; j++) {
+                if (dishes[j].id === id) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+        return found
+    }
+
+    onChangeId(e) {
+        var val = e.target.value;
+        var id = Number(val)
+        var valid = this.validId(id)
+        this.setState({id: id, validateId: valid});
+    }
+
+    handlerSubmit(e) {
+        e.preventDefault();
+        if (this.state.validateId === true) {
+            deleteData(this.state.id, 'https://localhost:44395/api/friend/deleteDish');
+        } else {
+            alert("Incorrect format of id:" + this.state.id)
+        }
+
+
     }
 
     render() {
@@ -42,8 +80,8 @@ class DeleteDish extends Component {
                         <li key={friend.id}>
                             Id {friend.id}: Name {friend.name}
                             <ul>
-                                {friend.dishes.map(dish =>(
-                                    <li key ={dish.id}>
+                                {friend.dishes.map(dish => (
+                                    <li key={dish.id}>
                                         Dish id: {dish.id} Dish name: {dish.name} Dish cost: {dish.cost}
                                     </li>
                                 ))}
@@ -51,25 +89,25 @@ class DeleteDish extends Component {
                         </li>
                     ))}
                 </ul>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handlerSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
                         id="groupName"
-                        label="Dish name"
+                        label="Dish id"
                         name="email"
                         autoComplete="NewGroup"
                         autoFocus
-                        onChange={this.onChangeName}
+                        onChange={this.onChangeId}
                     />
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
-                        onClick={this.handleSubmit}
+                        onClick={this.handlerSubmit}
                     >
                         add dish
                     </Button>
@@ -78,6 +116,15 @@ class DeleteDish extends Component {
         )
     }
 
+
 }
 
 export default DeleteDish;
+
+function deleteData(item, url) {
+    return axios.delete(url + '/' + item)
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+}

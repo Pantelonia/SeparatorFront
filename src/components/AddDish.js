@@ -11,8 +11,10 @@ class AddDish extends Component {
         super(props);
         this.state = {
             id: 0,
-            name:"Undefine",
-            cost: 0
+            name: "Undefine",
+            cost: 0,
+            validateId: false,
+            validateCost: false
         }
         this.onChangeId = this.onChangeId.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,29 +22,56 @@ class AddDish extends Component {
         this.onChangeCost = this.onChangeCost.bind(this);
 
     }
+
+    validId = (id) => {
+        const {friends} = this.props;
+        var found = false;
+        for(var i = 0; i < friends.length; i++) {
+            if (friends[i].id === id) {
+                found = true;
+                break;
+            }
+        }
+        return found
+    }
     onChangeId(e) {
         var val = e.target.value;
-        this.setState({id: val});
+        var id = Number(val)
+        var valid =this.validId(id)
+        this.setState({id: id, validateId: valid});
     }
+
     onChangeName(e) {
         var val = e.target.value;
         this.setState({name: val});
     }
+
+    validCost = (cost) =>{
+        return Number.isInteger(cost)
+    }
     onChangeCost(e) {
         var val = e.target.value;
-        this.setState({cost: val});
+        var cost = Number(val);
+        var valid =this.validCost(cost)
+        this.setState({cost: val, validateCost: valid});
     }
+
     handleSubmit(e) {
         e.preventDefault();
-        axios.put("https://localhost:44395/api/group/addDish",{
-            "name": this.state.name,
-            "cost": this.state.cost,
-            "friendId": this.state.id
-        })
-            .then(res => {
-                const group = res.data;
-                console.log(group)
-            });
+        if (this.state.validateCost === true && this.state.validateId === true) {
+            axios.put("https://localhost:44395/api/group/addDish", {
+                "name": this.state.name,
+                "cost": this.state.cost,
+                "friendId": this.state.id
+            })
+                .then(res => {
+                    const group = res.data;
+                    console.log(group)
+                });
+        } else{
+            alert("Incorrect date:")
+        }
+
     }
 
 
@@ -59,7 +88,7 @@ class AddDish extends Component {
                 padding: "40px"
 
             }}>
-                <ShowFriends name = {this.props.name}/>
+                <ShowFriends name={this.props.name}/>
                 <form onSubmit={this.handleSubmit}>
                     <TextField
                         variant="outlined"
