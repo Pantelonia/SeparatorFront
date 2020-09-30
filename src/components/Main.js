@@ -93,7 +93,7 @@ class Main extends Component {
         const addFriend = this.state.isAdd && <AddFriend id={this.state.id}/>
         const deleteFriend = this.state.isDelete && <DeleteFriend name={this.props.location.state.name}/>
         const total = this.state.isTotal && <ShowTotal name={this.props.location.state.name}/>
-        const addDish = this.state.isAddDish && <AddDish name={this.props.location.state.name}/>
+        const addDish = this.state.isAddDish && <AddDish name={this.props.location.state.name} friends={this.state.friends}/>
         const deleteDish = this.state.isDeleteDish && <DeleteDish name={this.props.location.state.name}/>
         const separate = this.state.isSeparate && <Separate name={this.props.location.state.name}/>
         const back = this.state.isBack && <Redirect to={{pathname: '/'}}/>
