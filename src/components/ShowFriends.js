@@ -20,11 +20,11 @@ class ShowFriends extends Component {
     render() {
         const friends = this.state.friends
         return (
-            <div>
+            <div >
                 <h2>List of my love friends</h2>
-                <ul>
+                <ul id= "friendList">
                     {friends.map(friend => (
-                        <li key={friend.id}>
+                        <li key={friend.id} id={friend.name}>
                             Id {friend.id}: Name {friend.name}
                         </li>
                     ))}

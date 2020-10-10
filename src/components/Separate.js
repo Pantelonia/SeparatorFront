@@ -25,7 +25,7 @@ class Separate extends Component {
     render() {
         const friends = this.state.friends
         return (
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{
+            <Grid id = "separateInfo" item  component={Paper} elevation={6} square style={{
                 position: "absolute",
                 top: '200px',
                 left: '100px',
@@ -37,9 +37,9 @@ class Separate extends Component {
 
             }}>
                 <h2>Separate info</h2>
-                <ul>
+                <ul style={{listStyle: "none"}}>
                     {friends.map(friend => (
-                        <Grid item  component={Paper}>
+                        <Grid item xs={12} sm={8} md={12} style={{backgroundColor:"#AF91EA"}}  component={Paper}>
                             <li key={friend.id} >
                                 <h3>Name of friend {friend.name}</h3>
                                 <ul>

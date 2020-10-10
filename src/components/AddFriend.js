@@ -21,7 +21,7 @@ class AddFriend extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        axios.put("https://localhost:44395/api/group/" + this.state.id, {
+        axios.put("https://localhost:44395/api/group/" + this.props.id, {
             "name": this.state.name,
             "dish": [],
             "groupId": this.props.id
@@ -46,13 +46,13 @@ class AddFriend extends Component {
                 padding: "40px"
 
             }}>
-                <form onSubmit={this.handleSubmit}>
+                <form id = "createFriendForm" onSubmit={this.handleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="groupName"
+                        id="newfriendName"
                         label="Friend name"
                         name="friend"
                         autoComplete="NewGroup"
@@ -60,6 +60,7 @@ class AddFriend extends Component {
                         onChange={this.onChangeName}
                     />
                     <Button
+                        id = "newFriendSub"
                         type="submit"
                         fullWidth
                         variant="contained"

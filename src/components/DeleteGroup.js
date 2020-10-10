@@ -74,7 +74,7 @@ class DeleteGroup extends Component {
                 padding: "40px"
 
             }}>
-                <ul>
+                <ul id = "deletelist">
                     {groups.map(group => (
                         <li id={group.name} key={group.name}>
                             {group.id} {group.name} {group.totalCost}

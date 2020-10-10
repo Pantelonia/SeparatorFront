@@ -89,13 +89,13 @@ class DeleteDish extends Component {
                         </li>
                     ))}
                 </ul>
-                <form onSubmit={this.handlerSubmit}>
+                <form id ="deleteDishForm" onSubmit={this.handlerSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="groupName"
+                        id="deleteDishId"
                         label="Dish id"
                         name="email"
                         autoComplete="NewGroup"
@@ -103,13 +103,14 @@ class DeleteDish extends Component {
                         onChange={this.onChangeId}
                     />
                     <Button
+                        id ="deleteDishSub"
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         onClick={this.handlerSubmit}
                     >
-                        add dish
+                        delete dish
                     </Button>
                 </form>
             </Grid>

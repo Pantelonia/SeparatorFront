@@ -10,23 +10,37 @@ class DeleteFriend extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: 0
+            id: 0,
+            isValid: false
         }
         this.onChangeId = this.onChangeId.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
+
+    validId = (id) => {
+        return Number.isInteger(id)
+    }
+
     onChangeId(e) {
         var val = e.target.value;
-        this.setState({id: val});
+        var id = Number(val)
+        var valid = this.validId(id)
+        this.setState({id: val, isValid: valid});
     }
+
     handleSubmit(e) {
         e.preventDefault();
-        axios.delete("https://localhost:44395/api/friend/" + this.state.id)
-            .then(res => {
-                const group = res.data;
-                console.log(group)
-            });
+        if (this.state.isValid === true) {
+            axios.delete("https://localhost:44395/api/friend/" + this.state.id)
+                .then(res => {
+                    const group = res.data;
+                    console.log(group)
+                });
+        } else {
+            alert("Incorrect id")
+        }
+
     }
 
 
@@ -43,21 +57,22 @@ class DeleteFriend extends Component {
                 padding: "40px"
 
             }}>
-                <ShowFriends name = {this.props.name}/>
-                <form onSubmit={this.handleSubmit}>
+                <ShowFriends name={this.props.name}/>
+                <form id="deleteFriendForm" onSubmit={this.handleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="groupName"
-                        label="Friend Name"
+                        id="deleteFriendName"
+                        label="Friend Id"
                         name="email"
                         autoComplete="DeleteFriend"
                         autoFocus
                         onChange={this.onChangeId}
                     />
                     <Button
+                        id="deleteFriendSub"
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -71,6 +86,12 @@ class DeleteFriend extends Component {
 
         )
     }
+
+    // setFriend = (friends) =>{
+    //     this.setState({
+    //         friends: friends
+    //     })
+    // }
 
 
 }

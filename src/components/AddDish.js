@@ -69,7 +69,12 @@ class AddDish extends Component {
                     console.log(group)
                 });
         } else{
-            alert("Incorrect date:")
+            if(this.state.validateId === true){
+                alert("Incorrect cost:" + this.state.cost)
+            }
+            else {
+                alert("Incorrect friend id:" + this.state.id)
+            }
         }
 
     }
@@ -89,13 +94,13 @@ class AddDish extends Component {
 
             }}>
                 <ShowFriends name={this.props.name}/>
-                <form onSubmit={this.handleSubmit}>
+                <form id = "addDishForm" onSubmit={this.handleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="groupName"
+                        id="newDishName"
                         label="Dish name"
                         name="email"
                         autoComplete="NewGroup"
@@ -107,7 +112,7 @@ class AddDish extends Component {
                         margin="normal"
                         required
                         fullWidth
-                        id="groupName"
+                        id="dishCost"
                         label="Cost of dish"
                         name="email"
                         autoComplete="NewGroup"
@@ -119,7 +124,7 @@ class AddDish extends Component {
                         margin="normal"
                         required
                         fullWidth
-                        id="groupName"
+                        id="addedFriendId"
                         label="Friend id"
                         name="email"
                         autoComplete="NewGroup"
@@ -127,6 +132,7 @@ class AddDish extends Component {
                         onChange={this.onChangeId}
                     />
                     <Button
+                        id="submitDish"
                         type="submit"
                         fullWidth
                         variant="contained"

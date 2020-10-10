@@ -32,7 +32,7 @@ class ShowTotal extends Component {
 
     render() {
         return (
-            <Typography component="h2" variant="h5">Total cost {this.state.totalCost}</Typography>
+            <Typography id="totalCost" component="h2" variant="h5">Total cost {this.state.totalCost}</Typography>
         )
     }
 }
@@ -60,6 +60,8 @@ class Main extends Component {
 
     componentDidMount(props) {
         console.log("name of group", this.props.location.state.name);
+        setTimeout(function(){
+            console.log("World!"); }, 3000);
         this.setState({name: this.props.location.state.name});
         axios.get("https://localhost:44395/api/group/name/" + this.props.location.state.name)
             .then(res => {
@@ -73,6 +75,7 @@ class Main extends Component {
         console.log(this.state.groups)
 
     }
+
 
 
     render() {
@@ -112,6 +115,7 @@ class Main extends Component {
                 <Grid container spacing={3}>
                     <Grid item xs={8} sm={8} md={12}>
                         <Button
+                            id = "showFriendRtn"
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -124,6 +128,7 @@ class Main extends Component {
                     <Grid item xs={8} sm={8} md={6}>
                         <Button
                             type="submit"
+                            id = "creatfriendBtn"
                             fullWidth
                             variant="contained"
                             color="primary"
@@ -134,17 +139,19 @@ class Main extends Component {
                     </Grid>
                     <Grid item xs={8} sm={8} md={6}>
                         <Button
+                            id="deleteFriendBtn"
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
                             onClick={this.handleDelete}
                         >
-                            delete friend
+                            delete lost  friend
                         </Button>
                     </Grid>
                     <Grid item xs={8} sm={8} md={12}>
                         <Button
+                            id="btnTotal"
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -156,6 +163,7 @@ class Main extends Component {
                     </Grid>
                     <Grid item xs={8} sm={8} md={6}>
                         <Button
+                            id = "addDishBtn"
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -167,6 +175,7 @@ class Main extends Component {
                     </Grid>
                     <Grid item xs={8} sm={8} md={6}>
                         <Button
+                            id = "deleteDishBtn"
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -178,6 +187,7 @@ class Main extends Component {
                     </Grid>
                     <Grid item xs={8} sm={8} md={12}>
                         <Button
+                            id="separateBtn"
                             type="submit"
                             fullWidth
                             variant="contained"

@@ -82,7 +82,7 @@ class FoundGroup extends Component {
                 padding: "40px"
 
             }}>
-                <ul>
+                <ul >
                     {groups.map(group => (
                         <li id={group.name} key={group.name}>
                             {group.id} {group.name} {group.totalCost}
